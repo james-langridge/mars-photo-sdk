@@ -1,0 +1,53 @@
+{
+  "name": "@jamesrwilliams/mars-photos-sdk",
+  "version": "1.0.0",
+  "description": "Type-safe TypeScript SDK for NASA's Mars Rover Photos API",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/**/*.ts",
+    "prepublishOnly": "npm run typecheck && npm run test && npm run build"
+  },
+  "keywords": [
+    "nasa",
+    "mars",
+    "rover",
+    "photos",
+    "api",
+    "sdk",
+    "typescript"
+  ],
+  "author": "James Williams",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamesrwilliams/mars-photos-sdk.git"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
