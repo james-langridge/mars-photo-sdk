@@ -1,7 +1,6 @@
 import type { HttpClient } from '../client'
 import { ValidationError } from '../client/errors'
-import type { CameraName, LatestPhotosResponse, Photo, PhotosResponse, RoverName } from '../types'
-import { isFailure } from '../utils/result'
+import type { CameraName, LatestPhotosResponse, Photo, PhotosResponse } from '../types'
 import { validateCameraName, validateDate, validatePage, validateRoverName } from '../utils/validators'
 import { buildLatestPhotosUrl, buildPhotosUrl } from '../utils/url-builder'
 
@@ -64,23 +63,21 @@ export class PhotosApi {
   async get(params: GetPhotosParams): Promise<Photo[]> {
     // Validate rover (calculation)
     const roverResult = validateRoverName(params.rover)
-    if (isFailure(roverResult)) {
+    if (!roverResult.success) {
       throw new ValidationError(roverResult.error)
     }
-    const rover = roverResult.value
 
     // Validate date (calculation)
     const dateResult = validateDate(params.date)
-    if (isFailure(dateResult)) {
+    if (!dateResult.success) {
       throw new ValidationError(dateResult.error)
     }
-    const date = dateResult.value
 
     // Validate camera if provided (calculation)
     let camera: CameraName | undefined
     if (params.camera) {
-      const cameraResult = validateCameraName(params.camera, rover)
-      if (isFailure(cameraResult)) {
+      const cameraResult = validateCameraName(params.camera, roverResult.value)
+      if (!cameraResult.success) {
         throw new ValidationError(cameraResult.error)
       }
       camera = cameraResult.value
@@ -89,14 +86,14 @@ export class PhotosApi {
     // Validate page if provided (calculation)
     const page = params.page ?? 1
     const pageResult = validatePage(page)
-    if (isFailure(pageResult)) {
+    if (!pageResult.success) {
       throw new ValidationError(pageResult.error)
     }
 
     // Build URL (calculation)
     const url = buildPhotosUrl(this.baseUrl, {
-      rover,
-      date,
+      rover: roverResult.value,
+      date: dateResult.value,
       camera,
       page,
       apiKey: this.apiKey,
@@ -124,7 +121,7 @@ export class PhotosApi {
   async getLatest(rover: string): Promise<Photo[]> {
     // Validate rover (calculation)
     const roverResult = validateRoverName(rover)
-    if (isFailure(roverResult)) {
+    if (!roverResult.success) {
       throw new ValidationError(roverResult.error)
     }
 

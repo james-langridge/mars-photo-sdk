@@ -42,9 +42,12 @@ export type {
   Manifest,
   ManifestPhoto,
   ManifestResponse,
+} from './types'
+
+export type {
   // Client types
   ClientConfig,
-} from './types'
+} from './client'
 
 export {
   // Rover constants

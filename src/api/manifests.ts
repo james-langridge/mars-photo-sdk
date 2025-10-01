@@ -1,7 +1,6 @@
 import type { HttpClient } from '../client'
 import { ValidationError } from '../client/errors'
 import type { Manifest, ManifestResponse } from '../types'
-import { isFailure } from '../utils/result'
 import { validateRoverName } from '../utils/validators'
 import { buildManifestUrl } from '../utils/url-builder'
 
@@ -40,7 +39,7 @@ export class ManifestsApi {
   async get(rover: string): Promise<Manifest> {
     // Validate rover (calculation)
     const roverResult = validateRoverName(rover)
-    if (isFailure(roverResult)) {
+    if (!roverResult.success) {
       throw new ValidationError(roverResult.error)
     }
 
