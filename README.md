@@ -15,13 +15,13 @@ Type-safe TypeScript client for NASA's Mars Rover Photos API.
 ## Installation
 
 ```bash
-npm install @jamesrwilliams/mars-photos-sdk
+npm install mars-photo-sdk
 ```
 
 ## Quick Start
 
 ```typescript
-import { MarsPhotosClient } from '@jamesrwilliams/mars-photos-sdk'
+import { MarsPhotosClient } from 'mars-photo-sdk'
 
 const client = new MarsPhotosClient({
   apiKey: 'YOUR_NASA_API_KEY'
@@ -177,7 +177,7 @@ import {
   ApiError,
   NetworkError,
   ConfigurationError
-} from '@jamesrwilliams/mars-photos-sdk'
+} from 'mars-photo-sdk'
 
 try {
   const photos = await client.photos.get({
@@ -213,7 +213,7 @@ import type {
   RoverName,
   CameraName,
   ClientConfig
-} from '@jamesrwilliams/mars-photos-sdk'
+} from 'mars-photo-sdk'
 ```
 
 ## Advanced Usage
