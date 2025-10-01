@@ -102,8 +102,10 @@ export const CAMERA_FULL_NAMES: Record<string, string> = {
 export interface Rover {
   readonly id: number
   readonly name: RoverName
-  readonly landingDate: string
-  readonly launchDate: string
+  readonly landingDate?: string
+  readonly landing_date?: string
+  readonly launchDate?: string
+  readonly launch_date?: string
   readonly status: RoverStatus
 }
 
@@ -113,6 +115,8 @@ export interface Rover {
 export interface Camera {
   readonly id: number
   readonly name: CameraName
-  readonly roverId: number
-  readonly fullName: string
+  readonly roverId?: number
+  readonly rover_id?: number
+  readonly fullName?: string
+  readonly full_name?: string
 }

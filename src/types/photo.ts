@@ -7,8 +7,10 @@ export interface Photo {
   readonly id: number
   readonly sol: number
   readonly camera: Camera
-  readonly imgSrc: string
-  readonly earthDate: string
+  readonly imgSrc?: string
+  readonly img_src?: string
+  readonly earthDate?: string
+  readonly earth_date?: string
   readonly rover: Rover
 }
 
