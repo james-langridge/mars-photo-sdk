@@ -5,8 +5,10 @@ import type { CameraName, RoverName, RoverStatus } from './rover'
  */
 export interface ManifestPhoto {
   readonly sol: number
-  readonly earthDate: string
-  readonly totalPhotos: number
+  readonly earthDate?: string
+  readonly earth_date?: string
+  readonly totalPhotos?: number
+  readonly total_photos?: number
   readonly cameras: CameraName[]
 }
 
@@ -15,12 +17,17 @@ export interface ManifestPhoto {
  */
 export interface Manifest {
   readonly name: RoverName
-  readonly landingDate: string
-  readonly launchDate: string
+  readonly landingDate?: string
+  readonly landing_date?: string
+  readonly launchDate?: string
+  readonly launch_date?: string
   readonly status: RoverStatus
-  readonly maxSol: number
-  readonly maxDate: string
-  readonly totalPhotos: number
+  readonly maxSol?: number
+  readonly max_sol?: number
+  readonly maxDate?: string
+  readonly max_date?: string
+  readonly totalPhotos?: number
+  readonly total_photos?: number
   readonly photos: ManifestPhoto[]
 }
 
