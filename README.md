@@ -290,6 +290,6 @@ MIT
 
 ## Links
 
-- [GitHub Repository](https://github.com/jameslangridge/mars-photos-sdk)
+- [GitHub Repository](https://github.com/james-langridge/mars-photos-sdk)
 - [NASA Mars Rover Photos API](https://api.nasa.gov/#mars-rover-photos)
 - [Mars Photos API GitHub](https://github.com/corincerami/mars-photo-api)
