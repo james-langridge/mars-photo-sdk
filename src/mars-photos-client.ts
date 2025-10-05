@@ -1,12 +1,9 @@
-import { ManifestsApi, PhotosApi } from './api'
-import type { ClientConfig } from './client'
-import { HttpClient, normalizeConfig } from './client'
+import { ManifestsApi, PhotosApi } from "./api";
+import type { ClientConfig } from "./client";
+import { HttpClient, normalizeConfig } from "./client";
 
 /**
  * Main SDK client for NASA Mars Rover Photos API
- *
- * Deep module with simple interface: photos.get(), manifests.get()
- * Complex validation, URL building, and HTTP handling hidden inside.
  *
  * @example
  * ```typescript
@@ -30,10 +27,10 @@ import { HttpClient, normalizeConfig } from './client'
  */
 export class MarsPhotosClient {
   /** Photos API endpoints */
-  public readonly photos: PhotosApi
+  public readonly photos: PhotosApi;
 
   /** Manifests API endpoints */
-  public readonly manifests: ManifestsApi
+  public readonly manifests: ManifestsApi;
 
   /**
    * Create a new Mars Photos API client
@@ -50,23 +47,20 @@ export class MarsPhotosClient {
    * ```
    */
   constructor(config: ClientConfig) {
-    // Validate and normalize config (calculation)
-    const normalizedConfig = normalizeConfig(config)
+    const normalizedConfig = normalizeConfig(config);
 
-    // Create HTTP client (action layer)
-    const httpClient = new HttpClient(normalizedConfig)
+    const httpClient = new HttpClient(normalizedConfig);
 
-    // Create API modules (orchestration)
     this.photos = new PhotosApi(
       httpClient,
       normalizedConfig.baseUrl,
-      normalizedConfig.apiKey
-    )
+      normalizedConfig.apiKey,
+    );
 
     this.manifests = new ManifestsApi(
       httpClient,
       normalizedConfig.baseUrl,
-      normalizedConfig.apiKey
-    )
+      normalizedConfig.apiKey,
+    );
   }
 }

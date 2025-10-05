@@ -12,7 +12,7 @@
  * isSolDate("2024-01-15") // false
  */
 export function isSolDate(date: string): boolean {
-  return /^\d+$/.test(date)
+  return /^\d+$/.test(date);
 }
 
 /**
@@ -30,7 +30,7 @@ export function isSolDate(date: string): boolean {
  * isValidEarthDateFormat("1000") // false
  */
 export function isValidEarthDateFormat(date: string): boolean {
-  return /^\d{4}-\d{2}-\d{2}$/.test(date)
+  return /^\d{4}-\d{2}-\d{2}$/.test(date);
 }
 
 /**
@@ -40,5 +40,5 @@ export function isValidEarthDateFormat(date: string): boolean {
  * @returns true if sol is 0 or positive, false otherwise
  */
 export function isValidSol(sol: number): boolean {
-  return Number.isInteger(sol) && sol >= 0
+  return Number.isInteger(sol) && sol >= 0;
 }

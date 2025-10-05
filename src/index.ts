@@ -1,11 +1,11 @@
 /**
  * NASA Mars Rover Photos SDK
  *
- * Type-safe TypeScript client for the NASA Mars Rover Photos API.
+ * TypeScript client for the NASA Mars Rover Photos API.
  *
  * @example
  * ```typescript
- * import { MarsPhotosClient } from '@jamesrwilliams/mars-photos-sdk'
+ * import { MarsPhotosClient } from 'mars-photos-sdk'
  *
  * const client = new MarsPhotosClient({
  *   apiKey: 'YOUR_NASA_API_KEY'
@@ -21,7 +21,7 @@
  */
 
 // Main client
-export { MarsPhotosClient } from './mars-photos-client'
+export { MarsPhotosClient } from "./mars-photos-client";
 
 // Types
 export type {
@@ -42,12 +42,12 @@ export type {
   Manifest,
   ManifestPhoto,
   ManifestResponse,
-} from './types'
+} from "./types";
 
 export type {
   // Client types
   ClientConfig,
-} from './client'
+} from "./client";
 
 export {
   // Rover constants
@@ -59,7 +59,7 @@ export {
   ALL_CAMERAS,
   ROVER_CAMERAS,
   CAMERA_FULL_NAMES,
-} from './types'
+} from "./types";
 
 // Error classes
 export {
@@ -69,7 +69,7 @@ export {
   ParseError,
   ValidationError,
   ConfigurationError,
-} from './client/errors'
+} from "./client/errors";
 
 // Utility functions (for advanced use)
 export {
@@ -81,8 +81,8 @@ export {
   validateCamera,
   validateDate,
   validatePage,
-} from './utils'
+} from "./utils";
 
 // Result type for advanced validation
-export type { Result } from './utils'
-export { success, failure, isSuccess, isFailure } from './utils'
+export type { Result } from "./utils";
+export { success, failure, isSuccess, isFailure } from "./utils";

@@ -1,15 +1,15 @@
-import type { CameraName, RoverName } from '../types/rover'
-import { isSolDate } from './date'
+import type { CameraName, RoverName } from "../types";
+import { isSolDate } from "./date";
 
 /**
  * Parameters for building photo query URLs
  */
 export interface PhotoQueryParams {
-  readonly rover: RoverName
-  readonly date: string
-  readonly camera?: CameraName
-  readonly page?: number
-  readonly apiKey: string
+  readonly rover: RoverName;
+  readonly date: string;
+  readonly camera?: CameraName;
+  readonly page?: number;
+  readonly apiKey: string;
 }
 
 /**
@@ -33,29 +33,29 @@ export interface PhotoQueryParams {
  */
 export function buildPhotosUrl(
   baseUrl: string,
-  params: PhotoQueryParams
+  params: PhotoQueryParams,
 ): string {
-  const { rover, date, camera, page, apiKey } = params
-  const searchParams = new URLSearchParams()
+  const { rover, date, camera, page, apiKey } = params;
+  const searchParams = new URLSearchParams();
 
   // Automatically detect sol vs earth_date
   if (isSolDate(date)) {
-    searchParams.set('sol', date)
+    searchParams.set("sol", date);
   } else {
-    searchParams.set('earth_date', date)
+    searchParams.set("earth_date", date);
   }
 
   if (camera) {
-    searchParams.set('camera', camera)
+    searchParams.set("camera", camera);
   }
 
   if (page !== undefined) {
-    searchParams.set('page', page.toString())
+    searchParams.set("page", page.toString());
   }
 
-  searchParams.set('api_key', apiKey)
+  searchParams.set("api_key", apiKey);
 
-  return `${baseUrl}/rovers/${rover}/photos?${searchParams.toString()}`
+  return `${baseUrl}/rovers/${rover}/photos?${searchParams.toString()}`;
 }
 
 /**
@@ -71,12 +71,12 @@ export function buildPhotosUrl(
 export function buildLatestPhotosUrl(
   baseUrl: string,
   rover: RoverName,
-  apiKey: string
+  apiKey: string,
 ): string {
-  const searchParams = new URLSearchParams()
-  searchParams.set('api_key', apiKey)
+  const searchParams = new URLSearchParams();
+  searchParams.set("api_key", apiKey);
 
-  return `${baseUrl}/rovers/${rover}/latest_photos?${searchParams.toString()}`
+  return `${baseUrl}/rovers/${rover}/latest_photos?${searchParams.toString()}`;
 }
 
 /**
@@ -92,10 +92,10 @@ export function buildLatestPhotosUrl(
 export function buildManifestUrl(
   baseUrl: string,
   rover: RoverName,
-  apiKey: string
+  apiKey: string,
 ): string {
-  const searchParams = new URLSearchParams()
-  searchParams.set('api_key', apiKey)
+  const searchParams = new URLSearchParams();
+  searchParams.set("api_key", apiKey);
 
-  return `${baseUrl}/manifests/${rover}?${searchParams.toString()}`
+  return `${baseUrl}/manifests/${rover}?${searchParams.toString()}`;
 }

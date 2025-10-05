@@ -1,8 +1,19 @@
-import type { HttpClient } from '../client'
-import { ValidationError } from '../client/errors'
-import type { CameraName, LatestPhotosResponse, Photo, PhotosResponse } from '../types'
-import { validateCameraName, validateDate, validatePage, validateRoverName } from '../utils/validators'
-import { buildLatestPhotosUrl, buildPhotosUrl } from '../utils/url-builder'
+import type { HttpClient } from "../client";
+import { ValidationError } from "../client";
+import type {
+  CameraName,
+  LatestPhotosResponse,
+  Photo,
+  PhotosResponse,
+} from "../types";
+import {
+  validateCameraName,
+  validateDate,
+  validatePage,
+  validateRoverName,
+  buildLatestPhotosUrl,
+  buildPhotosUrl,
+} from "../utils";
 
 /**
  * Parameters for fetching photos
@@ -11,22 +22,22 @@ export interface GetPhotosParams {
   /**
    * Rover name (case-insensitive)
    */
-  readonly rover: string
+  readonly rover: string;
 
   /**
    * Date - either sol number (e.g., "1000") or earth date (YYYY-MM-DD)
    */
-  readonly date: string
+  readonly date: string;
 
   /**
    * Camera abbreviation (optional, case-insensitive)
    */
-  readonly camera?: string
+  readonly camera?: string;
 
   /**
    * Page number for pagination (default: 1)
    */
-  readonly page?: number
+  readonly page?: number;
 }
 
 /**
@@ -40,7 +51,7 @@ export class PhotosApi {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly baseUrl: string,
-    private readonly apiKey: string
+    private readonly apiKey: string,
   ) {}
 
   /**
@@ -62,32 +73,32 @@ export class PhotosApi {
    */
   async get(params: GetPhotosParams): Promise<Photo[]> {
     // Validate rover (calculation)
-    const roverResult = validateRoverName(params.rover)
+    const roverResult = validateRoverName(params.rover);
     if (!roverResult.success) {
-      throw new ValidationError(roverResult.error)
+      throw new ValidationError(roverResult.error);
     }
 
     // Validate date (calculation)
-    const dateResult = validateDate(params.date)
+    const dateResult = validateDate(params.date);
     if (!dateResult.success) {
-      throw new ValidationError(dateResult.error)
+      throw new ValidationError(dateResult.error);
     }
 
     // Validate camera if provided (calculation)
-    let camera: CameraName | undefined
+    let camera: CameraName | undefined;
     if (params.camera) {
-      const cameraResult = validateCameraName(params.camera, roverResult.value)
+      const cameraResult = validateCameraName(params.camera, roverResult.value);
       if (!cameraResult.success) {
-        throw new ValidationError(cameraResult.error)
+        throw new ValidationError(cameraResult.error);
       }
-      camera = cameraResult.value
+      camera = cameraResult.value;
     }
 
     // Validate page if provided (calculation)
-    const page = params.page ?? 1
-    const pageResult = validatePage(page)
+    const page = params.page ?? 1;
+    const pageResult = validatePage(page);
     if (!pageResult.success) {
-      throw new ValidationError(pageResult.error)
+      throw new ValidationError(pageResult.error);
     }
 
     // Build URL (calculation)
@@ -97,13 +108,13 @@ export class PhotosApi {
       camera,
       page,
       apiKey: this.apiKey,
-    })
+    });
 
     // Perform HTTP request (action)
-    const response = await this.httpClient.get<PhotosResponse>(url)
+    const response = await this.httpClient.get<PhotosResponse>(url);
 
     // Transform to camelCase (calculation)
-    return this.transformPhotos(response.photos)
+    return this.transformPhotos(response.photos);
   }
 
   /**
@@ -120,23 +131,23 @@ export class PhotosApi {
    */
   async getLatest(rover: string): Promise<Photo[]> {
     // Validate rover (calculation)
-    const roverResult = validateRoverName(rover)
+    const roverResult = validateRoverName(rover);
     if (!roverResult.success) {
-      throw new ValidationError(roverResult.error)
+      throw new ValidationError(roverResult.error);
     }
 
     // Build URL (calculation)
     const url = buildLatestPhotosUrl(
       this.baseUrl,
       roverResult.value,
-      this.apiKey
-    )
+      this.apiKey,
+    );
 
     // Perform HTTP request (action)
-    const response = await this.httpClient.get<LatestPhotosResponse>(url)
+    const response = await this.httpClient.get<LatestPhotosResponse>(url);
 
     // Transform to camelCase (calculation)
-    return this.transformPhotos(response.latest_photos)
+    return this.transformPhotos(response.latest_photos);
   }
 
   /**
@@ -145,7 +156,7 @@ export class PhotosApi {
    * Pure function that converts snake_case API responses to camelCase.
    */
   private transformPhotos(photos: readonly Photo[]): Photo[] {
-    return photos.map(photo => ({
+    return photos.map((photo) => ({
       id: photo.id,
       sol: photo.sol,
       camera: {
@@ -163,6 +174,6 @@ export class PhotosApi {
         launchDate: photo.rover.launch_date ?? photo.rover.launchDate,
         status: photo.rover.status,
       },
-    }))
+    }));
   }
 }

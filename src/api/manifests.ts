@@ -1,8 +1,7 @@
-import type { HttpClient } from '../client'
-import { ValidationError } from '../client/errors'
-import type { Manifest, ManifestResponse } from '../types'
-import { validateRoverName } from '../utils/validators'
-import { buildManifestUrl } from '../utils/url-builder'
+import type { HttpClient } from "../client";
+import { ValidationError } from "../client";
+import type { Manifest, ManifestResponse } from "../types";
+import { validateRoverName, buildManifestUrl } from "../utils";
 
 /**
  * Manifests API module
@@ -15,7 +14,7 @@ export class ManifestsApi {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly baseUrl: string,
-    private readonly apiKey: string
+    private readonly apiKey: string,
   ) {}
 
   /**
@@ -38,23 +37,19 @@ export class ManifestsApi {
    */
   async get(rover: string): Promise<Manifest> {
     // Validate rover (calculation)
-    const roverResult = validateRoverName(rover)
+    const roverResult = validateRoverName(rover);
     if (!roverResult.success) {
-      throw new ValidationError(roverResult.error)
+      throw new ValidationError(roverResult.error);
     }
 
     // Build URL (calculation)
-    const url = buildManifestUrl(
-      this.baseUrl,
-      roverResult.value,
-      this.apiKey
-    )
+    const url = buildManifestUrl(this.baseUrl, roverResult.value, this.apiKey);
 
     // Perform HTTP request (action)
-    const response = await this.httpClient.get<ManifestResponse>(url)
+    const response = await this.httpClient.get<ManifestResponse>(url);
 
     // Transform to camelCase (calculation)
-    return this.transformManifest(response.photo_manifest)
+    return this.transformManifest(response.photo_manifest);
   }
 
   /**
@@ -71,12 +66,12 @@ export class ManifestsApi {
       maxSol: manifest.max_sol ?? manifest.maxSol,
       maxDate: manifest.max_date ?? manifest.maxDate,
       totalPhotos: manifest.total_photos ?? manifest.totalPhotos,
-      photos: manifest.photos.map(photo => ({
+      photos: manifest.photos.map((photo) => ({
         sol: photo.sol,
         earthDate: photo.earth_date ?? photo.earthDate,
         totalPhotos: photo.total_photos ?? photo.totalPhotos,
         cameras: photo.cameras,
       })),
-    }
+    };
   }
 }

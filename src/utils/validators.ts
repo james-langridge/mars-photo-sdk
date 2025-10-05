@@ -1,8 +1,8 @@
-import type { CameraName, RoverName } from '../types/rover'
-import { ALL_CAMERAS, ROVER_CAMERAS, ROVER_NAMES } from '../types/rover'
-import type { Result } from './result'
-import { failure, success } from './result'
-import { isValidEarthDateFormat, isSolDate } from './date'
+import type { CameraName, RoverName } from "../types";
+import { ALL_CAMERAS, ROVER_CAMERAS, ROVER_NAMES } from "../types";
+import type { Result } from "./result";
+import { failure, success } from "./result";
+import { isValidEarthDateFormat, isSolDate } from "./date";
 
 /**
  * Validate and normalize rover name
@@ -18,15 +18,15 @@ import { isValidEarthDateFormat, isSolDate } from './date'
  * validateRoverName("invalid") // failure("...")
  */
 export function validateRoverName(name: string): Result<RoverName> {
-  const normalized = name.toLowerCase() as RoverName
+  const normalized = name.toLowerCase() as RoverName;
 
   if (ROVER_NAMES.includes(normalized)) {
-    return success(normalized)
+    return success(normalized);
   }
 
   return failure(
-    `Invalid rover name: "${name}". Valid rovers: ${ROVER_NAMES.join(', ')}`
-  )
+    `Invalid rover name: "${name}". Valid rovers: ${ROVER_NAMES.join(", ")}`,
+  );
 }
 
 /**
@@ -44,18 +44,18 @@ export function validateRoverName(name: string): Result<RoverName> {
  */
 export function validateCameraName(
   camera: string,
-  rover: RoverName
+  rover: RoverName,
 ): Result<CameraName> {
-  const normalized = camera.toUpperCase() as CameraName
-  const validCameras = ROVER_CAMERAS[rover]
+  const normalized = camera.toUpperCase() as CameraName;
+  const validCameras = ROVER_CAMERAS[rover];
 
   if (validCameras.includes(normalized)) {
-    return success(normalized)
+    return success(normalized);
   }
 
   return failure(
-    `Invalid camera "${camera}" for rover "${rover}". Valid cameras: ${validCameras.join(', ')}`
-  )
+    `Invalid camera "${camera}" for rover "${rover}". Valid cameras: ${validCameras.join(", ")}`,
+  );
 }
 
 /**
@@ -67,15 +67,13 @@ export function validateCameraName(
  * @returns Result containing validated camera name or error
  */
 export function validateCamera(camera: string): Result<CameraName> {
-  const normalized = camera.toUpperCase() as CameraName
+  const normalized = camera.toUpperCase() as CameraName;
 
   if (ALL_CAMERAS.includes(normalized)) {
-    return success(normalized)
+    return success(normalized);
   }
 
-  return failure(
-    `Invalid camera name: "${camera}"`
-  )
+  return failure(`Invalid camera name: "${camera}"`);
 }
 
 /**
@@ -94,20 +92,20 @@ export function validateCamera(camera: string): Result<CameraName> {
  */
 export function validateDate(date: string): Result<string> {
   if (isSolDate(date)) {
-    const sol = parseInt(date, 10)
+    const sol = parseInt(date, 10);
     if (sol >= 0) {
-      return success(date)
+      return success(date);
     }
-    return failure('Sol date must be a non-negative integer')
+    return failure("Sol date must be a non-negative integer");
   }
 
   if (isValidEarthDateFormat(date)) {
-    return success(date)
+    return success(date);
   }
 
   return failure(
-    `Invalid date format: "${date}". Use sol number (e.g., "1000") or earth date (YYYY-MM-DD)`
-  )
+    `Invalid date format: "${date}". Use sol number (e.g., "1000") or earth date (YYYY-MM-DD)`,
+  );
 }
 
 /**
@@ -120,8 +118,8 @@ export function validateDate(date: string): Result<string> {
  */
 export function validatePage(page: number): Result<number> {
   if (Number.isInteger(page) && page >= 1) {
-    return success(page)
+    return success(page);
   }
 
-  return failure('Page must be a positive integer')
+  return failure("Page must be a positive integer");
 }

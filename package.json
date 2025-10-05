@@ -1,7 +1,7 @@
 {
   "name": "mars-photo-sdk",
   "version": "1.1.0",
-  "description": "Type-safe TypeScript SDK for NASA's Mars Rover Photos API",
+  "description": "TypeScript SDK for NASA's Mars Rover Photos API",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

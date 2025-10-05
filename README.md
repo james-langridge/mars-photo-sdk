@@ -1,6 +1,6 @@
 # NASA Mars Rover Photos SDK
 
-Type-safe TypeScript client for NASA's Mars Rover Photos API.
+TypeScript client for NASA's Mars Rover Photos API.
 
 ## Features
 
@@ -21,20 +21,20 @@ npm install mars-photo-sdk
 ## Quick Start
 
 ```typescript
-import { MarsPhotosClient } from 'mars-photo-sdk'
+import { MarsPhotosClient } from "mars-photo-sdk";
 
 const client = new MarsPhotosClient({
-  apiKey: 'YOUR_NASA_API_KEY'
-})
+  apiKey: "YOUR_NASA_API_KEY",
+});
 
 // Get photos by earth date
 const photos = await client.photos.get({
-  rover: 'curiosity',
-  date: '2024-01-15',
-  camera: 'NAVCAM'
-})
+  rover: "curiosity",
+  date: "2024-01-15",
+  camera: "NAVCAM",
+});
 
-console.log(`Found ${photos.length} photos`)
+console.log(`Found ${photos.length} photos`);
 ```
 
 ## Getting an API Key
@@ -47,10 +47,10 @@ Get your free NASA API key at [https://api.nasa.gov/#signUp](https://api.nasa.go
 
 ```typescript
 const client = new MarsPhotosClient({
-  apiKey: 'YOUR_NASA_API_KEY',           // Required
-  baseUrl: 'https://api.nasa.gov/...',   // Optional, custom API URL
-  fetch: customFetch                      // Optional, custom fetch implementation
-})
+  apiKey: "YOUR_NASA_API_KEY", // Required
+  baseUrl: "https://api.nasa.gov/...", // Optional, custom API URL
+  fetch: customFetch, // Optional, custom fetch implementation
+});
 ```
 
 ### Photos API
@@ -62,21 +62,22 @@ Fetch photos by rover, date, and optionally camera. Date can be either a sol num
 ```typescript
 // By Earth date
 const photos = await client.photos.get({
-  rover: 'curiosity',
-  date: '2024-01-15',
-  camera: 'NAVCAM',  // Optional
-  page: 1            // Optional, default 1
-})
+  rover: "curiosity",
+  date: "2024-01-15",
+  camera: "NAVCAM", // Optional
+  page: 1, // Optional, default 1
+});
 
 // By sol (Martian day)
 const photos = await client.photos.get({
-  rover: 'perseverance',
-  date: '1000',  // Sol 1000
-  camera: 'MCZ_RIGHT'
-})
+  rover: "perseverance",
+  date: "1000", // Sol 1000
+  camera: "MCZ_RIGHT",
+});
 ```
 
 **Parameters:**
+
 - `rover` (string, required) - Rover name (case-insensitive): `'curiosity'`, `'opportunity'`, `'perseverance'`, or `'spirit'`
 - `date` (string, required) - Either sol number (e.g., `'1000'`) or earth date in `YYYY-MM-DD` format
 - `camera` (string, optional) - Camera abbreviation (rover-specific, see below)
@@ -89,10 +90,11 @@ const photos = await client.photos.get({
 Fetch the most recent photos from a rover.
 
 ```typescript
-const photos = await client.photos.getLatest('curiosity')
+const photos = await client.photos.getLatest("curiosity");
 ```
 
 **Parameters:**
+
 - `rover` (string, required) - Rover name (case-insensitive)
 
 **Returns:** `Promise<Photo[]>`
@@ -104,20 +106,21 @@ const photos = await client.photos.getLatest('curiosity')
 Fetch complete mission manifest including metadata and photo inventory.
 
 ```typescript
-const manifest = await client.manifests.get('curiosity')
+const manifest = await client.manifests.get("curiosity");
 
-console.log(`Mission: ${manifest.name}`)
-console.log(`Status: ${manifest.status}`)
-console.log(`Total photos: ${manifest.totalPhotos}`)
-console.log(`Latest sol: ${manifest.maxSol}`)
+console.log(`Mission: ${manifest.name}`);
+console.log(`Status: ${manifest.status}`);
+console.log(`Total photos: ${manifest.totalPhotos}`);
+console.log(`Latest sol: ${manifest.maxSol}`);
 
 // Iterate through photo counts by sol
-manifest.photos.forEach(entry => {
-  console.log(`Sol ${entry.sol}: ${entry.totalPhotos} photos`)
-})
+manifest.photos.forEach((entry) => {
+  console.log(`Sol ${entry.sol}: ${entry.totalPhotos} photos`);
+});
 ```
 
 **Parameters:**
+
 - `rover` (string, required) - Rover name (case-insensitive)
 
 **Returns:** `Promise<Manifest>`
@@ -134,6 +137,7 @@ manifest.photos.forEach(entry => {
 ### Camera Abbreviations
 
 **Curiosity:**
+
 - `FHAZ` - Front Hazard Avoidance Camera
 - `RHAZ` - Rear Hazard Avoidance Camera
 - `MAST` - Mast Camera
@@ -143,6 +147,7 @@ manifest.photos.forEach(entry => {
 - `NAVCAM` - Navigation Camera
 
 **Opportunity & Spirit:**
+
 - `FHAZ` - Front Hazard Avoidance Camera
 - `RHAZ` - Rear Hazard Avoidance Camera
 - `NAVCAM` - Navigation Camera
@@ -150,6 +155,7 @@ manifest.photos.forEach(entry => {
 - `MINITES` - Miniature Thermal Emission Spectrometer
 
 **Perseverance:**
+
 - `EDL_RUCAM` - Rover Up-Look Camera
 - `EDL_RDCAM` - Rover Down-Look Camera
 - `EDL_DDCAM` - Descent Stage Down-Look Camera
@@ -176,27 +182,27 @@ import {
   ValidationError,
   ApiError,
   NetworkError,
-  ConfigurationError
-} from 'mars-photo-sdk'
+  ConfigurationError,
+} from "mars-photo-sdk";
 
 try {
   const photos = await client.photos.get({
-    rover: 'curiosity',
-    date: '2024-01-15'
-  })
+    rover: "curiosity",
+    date: "2024-01-15",
+  });
 } catch (error) {
   if (error instanceof ValidationError) {
     // Invalid input parameters
-    console.error('Validation error:', error.message)
+    console.error("Validation error:", error.message);
   } else if (error instanceof ApiError) {
     // API returned error status
-    console.error('API error:', error.status, error.message)
+    console.error("API error:", error.status, error.message);
   } else if (error instanceof NetworkError) {
     // Network request failed
-    console.error('Network error:', error.message)
+    console.error("Network error:", error.message);
   } else if (error instanceof ConfigurationError) {
     // Client misconfigured
-    console.error('Config error:', error.message)
+    console.error("Config error:", error.message);
   }
 }
 ```
@@ -212,8 +218,8 @@ import type {
   ManifestPhoto,
   RoverName,
   CameraName,
-  ClientConfig
-} from 'mars-photo-sdk'
+  ClientConfig,
+} from "mars-photo-sdk";
 ```
 
 ## Advanced Usage
@@ -224,9 +230,9 @@ Provide a custom fetch implementation for testing or special requirements:
 
 ```typescript
 const client = new MarsPhotosClient({
-  apiKey: 'YOUR_NASA_API_KEY',
-  fetch: customFetch
-})
+  apiKey: "YOUR_NASA_API_KEY",
+  fetch: customFetch,
+});
 ```
 
 ### Validation Utilities
@@ -238,19 +244,19 @@ import {
   validateRoverName,
   validateCameraName,
   validateDate,
-  isSolDate
-} from '@jamesrwilliams/mars-photos-sdk'
+  isSolDate,
+} from "mars-photos-sdk";
 
-const result = validateRoverName('curiosity')
+const result = validateRoverName("curiosity");
 if (result.success) {
-  console.log('Valid rover:', result.value)
+  console.log("Valid rover:", result.value);
 } else {
-  console.error('Error:', result.error)
+  console.error("Error:", result.error);
 }
 
 // Check if a date string is a sol number
-if (isSolDate('1000')) {
-  console.log('This is a sol date')
+if (isSolDate("1000")) {
+  console.log("This is a sol date");
 }
 ```
 
@@ -259,15 +265,11 @@ if (isSolDate('1000')) {
 Access rover and camera constants:
 
 ```typescript
-import {
-  ROVER_NAMES,
-  CURIOSITY_CAMERAS,
-  ROVER_CAMERAS
-} from '@jamesrwilliams/mars-photos-sdk'
+import { ROVER_NAMES, CURIOSITY_CAMERAS, ROVER_CAMERAS } from "mars-photos-sdk";
 
-console.log('Available rovers:', ROVER_NAMES)
-console.log('Curiosity cameras:', CURIOSITY_CAMERAS)
-console.log('Valid cameras for Curiosity:', ROVER_CAMERAS.curiosity)
+console.log("Available rovers:", ROVER_NAMES);
+console.log("Curiosity cameras:", CURIOSITY_CAMERAS);
+console.log("Valid cameras for Curiosity:", ROVER_CAMERAS.curiosity);
 ```
 
 ## Design Philosophy

@@ -3,9 +3,9 @@
  */
 export class MarsPhotosError extends Error {
   constructor(message: string) {
-    super(message)
-    this.name = 'MarsPhotosError'
-    Object.setPrototypeOf(this, MarsPhotosError.prototype)
+    super(message);
+    this.name = "MarsPhotosError";
+    Object.setPrototypeOf(this, MarsPhotosError.prototype);
   }
 }
 
@@ -16,11 +16,11 @@ export class ApiError extends MarsPhotosError {
   constructor(
     message: string,
     public readonly status: number,
-    public readonly statusText: string
+    public readonly statusText: string,
   ) {
-    super(message)
-    this.name = 'ApiError'
-    Object.setPrototypeOf(this, ApiError.prototype)
+    super(message);
+    this.name = "ApiError";
+    Object.setPrototypeOf(this, ApiError.prototype);
   }
 }
 
@@ -28,10 +28,13 @@ export class ApiError extends MarsPhotosError {
  * Error thrown when API response cannot be parsed
  */
 export class ParseError extends MarsPhotosError {
-  constructor(message: string, public readonly cause?: unknown) {
-    super(message)
-    this.name = 'ParseError'
-    Object.setPrototypeOf(this, ParseError.prototype)
+  constructor(
+    message: string,
+    public readonly cause?: unknown,
+  ) {
+    super(message);
+    this.name = "ParseError";
+    Object.setPrototypeOf(this, ParseError.prototype);
   }
 }
 
@@ -39,10 +42,13 @@ export class ParseError extends MarsPhotosError {
  * Error thrown when network request fails
  */
 export class NetworkError extends MarsPhotosError {
-  constructor(message: string, public readonly cause?: unknown) {
-    super(message)
-    this.name = 'NetworkError'
-    Object.setPrototypeOf(this, NetworkError.prototype)
+  constructor(
+    message: string,
+    public readonly cause?: unknown,
+  ) {
+    super(message);
+    this.name = "NetworkError";
+    Object.setPrototypeOf(this, NetworkError.prototype);
   }
 }
 
@@ -51,9 +57,9 @@ export class NetworkError extends MarsPhotosError {
  */
 export class ValidationError extends MarsPhotosError {
   constructor(message: string) {
-    super(message)
-    this.name = 'ValidationError'
-    Object.setPrototypeOf(this, ValidationError.prototype)
+    super(message);
+    this.name = "ValidationError";
+    Object.setPrototypeOf(this, ValidationError.prototype);
   }
 }
 
@@ -62,8 +68,8 @@ export class ValidationError extends MarsPhotosError {
  */
 export class ConfigurationError extends MarsPhotosError {
   constructor(message: string) {
-    super(message)
-    this.name = 'ConfigurationError'
-    Object.setPrototypeOf(this, ConfigurationError.prototype)
+    super(message);
+    this.name = "ConfigurationError";
+    Object.setPrototypeOf(this, ConfigurationError.prototype);
   }
 }
