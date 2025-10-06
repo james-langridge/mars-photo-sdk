@@ -1,6 +1,6 @@
 # NASA Mars Rover Photos SDK
 
-TypeScript client for NASA's Mars Rover Photos API.
+TypeScript client for NASA's Mars Rover Photos API. A comprehensive, type-safe SDK with clear documentation and examples for accessing Mars rover photo data.
 
 ## Features
 
@@ -312,5 +312,6 @@ MIT
 ## Links
 
 - [GitHub Repository](https://github.com/james-langridge/mars-photos-sdk)
+- [npm Package](https://www.npmjs.com/package/mars-photo-sdk)
+- [NASA API Portal](https://api.nasa.gov/)
 - [NASA Mars Rover Photos API](https://api.nasa.gov/#mars-rover-photos)
-- [Mars Photos API GitHub](https://github.com/corincerami/mars-photo-api)
