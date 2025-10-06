@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Enhanced README description to emphasize comprehensive SDK features
+- Updated Links section to focus on official NASA API resources
+- Added npm package link to README
+
 ### Fixed
 
 ## [1.2.0] - 2025-10-06
