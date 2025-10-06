@@ -35,18 +35,21 @@ export class MarsPhotosClient {
   /**
    * Create a new Mars Photos API client
    *
-   * @param config - Client configuration with API key
+   * @param config - Client configuration (optional, defaults to DEMO_KEY)
    * @throws {ConfigurationError} If configuration is invalid
    *
    * @example
    * ```typescript
+   * // Use DEMO_KEY (for testing/development)
+   * const client = new MarsPhotosClient()
+   *
+   * // Use your own API key (recommended for production)
    * const client = new MarsPhotosClient({
-   *   apiKey: 'YOUR_NASA_API_KEY',
-   *   baseUrl: 'https://api.nasa.gov/mars-photos/api/v1' // optional
+   *   apiKey: 'YOUR_NASA_API_KEY'
    * })
    * ```
    */
-  constructor(config: ClientConfig) {
+  constructor(config?: ClientConfig) {
     const normalizedConfig = normalizeConfig(config);
 
     const httpClient = new HttpClient(normalizedConfig);

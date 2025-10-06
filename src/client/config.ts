@@ -6,14 +6,21 @@ import { ConfigurationError } from "./errors";
 export const DEFAULT_BASE_URL = "https://api.nasa.gov/mars-photos/api/v1";
 
 /**
+ * Default NASA API key for testing/development
+ * Get your own key at https://api.nasa.gov/#signUp for production use
+ */
+export const DEFAULT_API_KEY = "DEMO_KEY";
+
+/**
  * Client configuration options
  */
 export interface ClientConfig {
   /**
-   * NASA API key - required
-   * Get one at https://api.nasa.gov/#signUp
+   * NASA API key
+   * Defaults to DEMO_KEY if not provided
+   * Get your own at https://api.nasa.gov/#signUp for production use
    */
-  readonly apiKey: string;
+  readonly apiKey?: string;
 
   /**
    * Base URL for NASA API
@@ -47,10 +54,12 @@ export interface NormalizedConfig {
  * @returns Normalized configuration with defaults applied
  * @throws {ConfigurationError} If configuration is invalid
  */
-export function normalizeConfig(config: ClientConfig): NormalizedConfig {
-  if (!config.apiKey || config.apiKey.trim() === "") {
+export function normalizeConfig(config: ClientConfig = {}): NormalizedConfig {
+  const apiKey = config.apiKey?.trim() ?? DEFAULT_API_KEY;
+
+  if (apiKey === "") {
     throw new ConfigurationError(
-      "API key is required. Get one at https://api.nasa.gov/#signUp",
+      "API key cannot be empty. Get one at https://api.nasa.gov/#signUp",
     );
   }
 
@@ -61,7 +70,7 @@ export function normalizeConfig(config: ClientConfig): NormalizedConfig {
   }
 
   return {
-    apiKey: config.apiKey.trim(),
+    apiKey,
     baseUrl: config.baseUrl?.trim() ?? DEFAULT_BASE_URL,
     fetch: fetchImpl,
   };

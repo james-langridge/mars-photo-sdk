@@ -8,3 +8,6 @@ coverage/
 .vscode/
 .idea/
 *.tsbuildinfo
+
+CLAUDE.md
+.claude/

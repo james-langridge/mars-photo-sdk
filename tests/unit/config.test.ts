@@ -1,9 +1,28 @@
 import { describe, it, expect } from "vitest";
-import { normalizeConfig, DEFAULT_BASE_URL } from "../../src/client";
+import {
+  normalizeConfig,
+  DEFAULT_BASE_URL,
+  DEFAULT_API_KEY,
+} from "../../src/client";
 import { ConfigurationError } from "../../src";
 
 describe("config normalization", () => {
   describe("normalizeConfig", () => {
+    it("uses DEMO_KEY when no config provided", () => {
+      const config = normalizeConfig();
+
+      expect(config.apiKey).toBe(DEFAULT_API_KEY);
+      expect(config.baseUrl).toBe(DEFAULT_BASE_URL);
+      expect(typeof config.fetch).toBe("function");
+    });
+
+    it("uses DEMO_KEY when no apiKey provided", () => {
+      const config = normalizeConfig({});
+
+      expect(config.apiKey).toBe(DEFAULT_API_KEY);
+      expect(config.baseUrl).toBe(DEFAULT_BASE_URL);
+    });
+
     it("accepts valid configuration", () => {
       const config = normalizeConfig({
         apiKey: "test-key",
@@ -62,7 +81,7 @@ describe("config normalization", () => {
         normalizeConfig({
           apiKey: "",
         });
-      }).toThrow("API key is required");
+      }).toThrow("API key cannot be empty");
     });
 
     it("throws ConfigurationError for whitespace-only apiKey", () => {
@@ -101,6 +120,12 @@ describe("config normalization", () => {
   describe("DEFAULT_BASE_URL", () => {
     it("points to NASA API", () => {
       expect(DEFAULT_BASE_URL).toBe("https://api.nasa.gov/mars-photos/api/v1");
+    });
+  });
+
+  describe("DEFAULT_API_KEY", () => {
+    it("is set to DEMO_KEY", () => {
+      expect(DEFAULT_API_KEY).toBe("DEMO_KEY");
     });
   });
 });
