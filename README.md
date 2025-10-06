@@ -23,9 +23,8 @@ npm install mars-photo-sdk
 ```typescript
 import { MarsPhotosClient } from "mars-photo-sdk";
 
-const client = new MarsPhotosClient({
-  apiKey: "YOUR_NASA_API_KEY",
-});
+// Zero config - uses DEMO_KEY for quick testing
+const client = new MarsPhotosClient();
 
 // Get photos by earth date
 const photos = await client.photos.get({
@@ -37,9 +36,19 @@ const photos = await client.photos.get({
 console.log(`Found ${photos.length} photos`);
 ```
 
-## Getting an API Key
+## API Key
 
-Get your free NASA API key at [https://api.nasa.gov/#signUp](https://api.nasa.gov/#signUp)
+The SDK uses NASA's `DEMO_KEY` by default for testing and development. For production use, get your free API key at [https://api.nasa.gov/#signUp](https://api.nasa.gov/#signUp):
+
+```typescript
+const client = new MarsPhotosClient({
+  apiKey: "YOUR_NASA_API_KEY",
+});
+```
+
+**Rate Limits:**
+- `DEMO_KEY`: 50 requests per hour
+- Personal API key: 1,000 requests per hour
 
 ## API Reference
 
@@ -47,9 +56,19 @@ Get your free NASA API key at [https://api.nasa.gov/#signUp](https://api.nasa.go
 
 ```typescript
 const client = new MarsPhotosClient({
-  apiKey: "YOUR_NASA_API_KEY", // Required
+  apiKey: "YOUR_NASA_API_KEY", // Optional, defaults to DEMO_KEY
   baseUrl: "https://api.nasa.gov/...", // Optional, custom API URL
   fetch: customFetch, // Optional, custom fetch implementation
+});
+```
+
+**For browser/CORS use cases:**
+
+The Heroku community mirror allows cross-origin requests and doesn't require an API key:
+
+```typescript
+const client = new MarsPhotosClient({
+  baseUrl: "https://mars-photos.herokuapp.com/api/v1",
 });
 ```
 
